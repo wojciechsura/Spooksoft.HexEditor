@@ -1,0 +1,53 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+/******************************************************************************
+*                                                                             *
+* This code was generated automatically from a template. Don't modify it,     *
+* because all your changes will be overwritten. Instead, if needed, modify    *
+* the template file (*.tt)                                                    *
+*                                                                             *
+******************************************************************************/
+
+using System;
+
+namespace HexEditor.Geometry
+{
+<# 
+var types = new[] { "int", "float", "double" };
+var names = new[] { "Int", "Float", "Double" };
+var isFloats = new[] { false, true, true };
+
+for (int i = 0; i < types.Count(); i++) {
+	var t = types[i];
+	var n = names[i];
+	var isFloat = isFloats[i];
+#>
+    public class Base<#=n#>Point<TConcretePoint>
+        where TConcretePoint : Base<#=n#>Point<TConcretePoint>
+    {
+        // Public methods ---------------------------------------------------------
+
+        public Base<#=n#>Point(<#=t#> x, <#=t#> y)
+        {
+<# if(isFloat) {#>
+            if (<#=t#>.IsNaN(x))
+                throw new ArgumentException(nameof(x));
+            if (<#=t#>.IsNaN(y))
+                throw new ArgumentException(nameof(y));
+				
+<#}#>
+            X = x;
+            Y = y;
+        }
+
+        public <#=t#> X { get; }
+        public <#=t#> Y { get; }
+    }
+<#
+}
+#>
+}

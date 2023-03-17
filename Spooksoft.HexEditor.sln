@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spooksoft.HexEditor", "Spooksoft.HexEditor\Spooksoft.HexEditor.csproj", "{D771FC1B-C1C7-4D81-AD53-8035B09B477A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spooksoft.HexEditor.Test", "Spooksoft.HexEditor.Test\Spooksoft.HexEditor.Test.csproj", "{8BD8FF7F-DAA6-4701-B58D-8B8789767A56}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D771FC1B-C1C7-4D81-AD53-8035B09B477A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D771FC1B-C1C7-4D81-AD53-8035B09B477A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D771FC1B-C1C7-4D81-AD53-8035B09B477A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D771FC1B-C1C7-4D81-AD53-8035B09B477A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BD8FF7F-DAA6-4701-B58D-8B8789767A56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BD8FF7F-DAA6-4701-B58D-8B8789767A56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BD8FF7F-DAA6-4701-B58D-8B8789767A56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BD8FF7F-DAA6-4701-B58D-8B8789767A56}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9A001CA5-A785-41B6-93A7-D5AAD4C5CC3B}
+	EndGlobalSection
+EndGlobal

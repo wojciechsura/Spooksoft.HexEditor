@@ -1,0 +1,100 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+/******************************************************************************
+*                                                                             *
+* This code was generated automatically from a template. Don't modify it,     *
+* because all your changes will be overwritten. Instead, if needed, modify    *
+* the template file (*.tt)                                                    *
+*                                                                             *
+******************************************************************************/
+
+using System;
+
+namespace HexEditor.Geometry
+{
+<# 
+var types = new[] { "int", "float", "double" };
+var names = new[] { "Int", "Float", "Double" };
+var isFloats = new[] { false, true, true };
+var twos = new[] { "2", "2.0f", "2.0" };
+
+for (int i = 0; i < types.Count(); i++) {
+	var t = types[i];
+	var n = names[i];
+	var isFloat = isFloats[i];
+    var two = twos[i];
+#>
+    // *** Base<#=n#>Rectangle ***
+
+    public abstract class Base<#=n#>Rectangle<TConcreteRectangle, TConcretePoint>
+	    where TConcreteRectangle : Base<#=n#>Rectangle<TConcreteRectangle, TConcretePoint>
+		where TConcretePoint : Base<#=n#>Point<TConcretePoint>
+    {
+        // Protected methods ------------------------------------------------------
+
+        protected abstract TConcreteRectangle CreateRectangle(<#=t#> left, <#=t#> top, <#=t#> right, <#=t#> bottom);
+        protected abstract TConcretePoint CreatePoint(<#=t#> x, <#=t#> y);
+
+        // Public methods ---------------------------------------------------------
+
+        public Base<#=n#>Rectangle(<#=t#> left, <#=t#> top, <#=t#> right, <#=t#> bottom)
+        {
+<# if (isFloat) { #>
+            if (<#=t#>.IsNaN(left))
+			    throw new ArgumentException(nameof(left));
+            if (<#=t#>.IsNaN(right))
+			    throw new ArgumentException(nameof(right));
+            if (<#=t#>.IsNaN(top))
+			    throw new ArgumentException(nameof(top));
+            if (<#=t#>.IsNaN(bottom))
+			    throw new ArgumentException(nameof(bottom));
+<# } #>
+            if (right < left)
+                throw new ArgumentOutOfRangeException(nameof(right));
+            if (bottom < top)
+                throw new ArgumentOutOfRangeException(nameof(bottom));
+
+	        Left = left;
+            Top = top;
+            Right = right;
+            Bottom = bottom;
+        }
+
+		public bool Contains(TConcretePoint point)
+		{
+			return point.X >= Left && point.X <= Right && point.Y >= Top && point.Y <= Bottom;
+		}
+
+		public TConcreteRectangle ExtendBy(TConcretePoint point)
+		{
+			return CreateRectangle(Math.Min(Left, point.X), Math.Min(Top, point.Y), Math.Max(Right, point.X), Math.Max(Bottom, point.Y));
+		}
+
+		public bool IntersectsWith(TConcreteRectangle rect) 
+		{
+			return rect.Left <= Right &&
+				rect.Right >= Left &&
+				rect.Top <= Bottom &&
+				rect.Bottom >= Top;
+		}
+
+        // Public properties ------------------------------------------------------
+
+        public <#=t#> Left { get; }    
+        public <#=t#> Top { get; }
+        public <#=t#> Right { get; }
+        public <#=t#> Bottom { get; }
+        public virtual <#=t#> Width => Right - Left;
+        public virtual <#=t#> Height => Bottom - Top;
+
+        public TConcretePoint Center => CreatePoint((Left + Right) / <#=two#>, (Top + Bottom) / <#=two#>);
+    }
+
+<#
+}
+#>
+}

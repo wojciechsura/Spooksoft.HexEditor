@@ -1,0 +1,50 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+using System;
+
+namespace HexEditor.Geometry
+{
+<# 
+var types = new[] { "int", "float", "double" };
+var names = new[] { "Int", "Float", "Double" };
+var isFloats = new[] { false, true, true };
+var twos = new[] { "2", "2.0f", "2.0" };
+
+for (int i = 0; i < types.Count(); i++) 
+{
+	var t = types[i];
+	var n = names[i];
+	var isFloat = isFloats[i];
+    var two = twos[i];
+#>
+    public static class <#=n#>Utils
+    {
+        public static <#=t#> ClampTo(this <#=t#> value, <#=t#> min, <#=t#> max)
+        {
+            return Math.Max(min, Math.Min(max, value));
+        }
+
+        public static bool IsWithin(this <#=t#> value, <#=t#> min, <#=t#> max)
+        {
+            return value >= min && value <= max;
+        }
+
+        public static bool IsOutside(this <#=t#> value, <#=t#> min, <#=t#> max)
+        {
+            return value < min && value > max;
+        }
+
+        public static bool IsWithinExclusive(this <#=t#> value, <#=t#> min, <#=t#> max)
+        {
+            return value > min && value < max;
+        }
+    }
+
+<#
+}
+#>
+}
