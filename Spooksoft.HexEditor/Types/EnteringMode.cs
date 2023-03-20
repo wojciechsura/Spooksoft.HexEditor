@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HexEditor.Types
+namespace Spooksoft.HexEditor.Types
 {
     public enum EnteringMode
     {

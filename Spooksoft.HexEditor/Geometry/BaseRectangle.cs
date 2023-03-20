@@ -8,7 +8,7 @@
 
 using System;
 
-namespace HexEditor.Geometry
+namespace Spooksoft.HexEditor.Geometry
 {
     // *** BaseIntRectangle ***
 

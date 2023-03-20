@@ -8,11 +8,11 @@
 
   <PropertyGroup>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <FileVersion>1.0.0.0</FileVersion>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <VersionPrefix>1.0.0.0</VersionPrefix>
+    <FileVersion>1.0.2.0</FileVersion>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <VersionPrefix>1.0.2.0</VersionPrefix>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>First public release</PackageReleaseNotes>
+    <PackageReleaseNotes>Support for creating ByteContainer from non-seekable stream</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Authors>Wojciech "Spook" Sura</Authors>
     <Description>A performant and elegant hexeditor control for WPF.</Description>

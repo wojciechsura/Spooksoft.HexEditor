@@ -1,11 +1,11 @@
-﻿using HexEditor.Infrastructure;
+﻿using Spooksoft.HexEditor.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HexEditor.Test.Mocks
+namespace Spooksoft.HexEditor.Test.Mocks
 {
     class BufferPoolMock<T> : IBufferPool<T>
     {

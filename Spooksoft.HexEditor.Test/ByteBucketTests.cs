@@ -1,11 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using HexEditor.Infrastructure;
-using HexEditor.Test.Mocks;
+using Spooksoft.HexEditor.Infrastructure;
+using Spooksoft.HexEditor.Test.Mocks;
+using Spooksoft.HexEditor.Test.Utils;
 using NUnit.Framework;
 
-namespace HexEditor.Test
+namespace Spooksoft.HexEditor.Test
 {
     [TestFixture]
     public class ByteBucketTests
@@ -43,6 +44,38 @@ namespace HexEditor.Test
             // Act
 
             ByteBucket byteBucket = new ByteBucket(ms, 10, 10, new BufferPoolMock<byte>());
+
+            // Assert
+
+            VerifyContents(byteBucket, data);
+        }
+
+        [Test]
+        public void CreateFromNotSeekableStreamTest()
+        {
+            byte[] data = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            MemoryStream ms = new MemoryStream(data);
+            ms.Seek(0, SeekOrigin.Begin);
+
+            var wrapper = new NonSeekableStreamWrapper(ms);
+
+            // Act
+
+            ByteBucket byteBucket = new ByteBucket(ms, 10, 10, new BufferPoolMock<byte>());
+
+            // Assert
+
+            VerifyContents(byteBucket, data);
+        }
+
+        [Test]
+        public void CreateFromByteDataTest()
+        {
+            byte[] data = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+            // Act
+
+            ByteBucket byteBucket = new ByteBucket(data, 0, 10, 10, new BufferPoolMock<byte>());
 
             // Assert
 

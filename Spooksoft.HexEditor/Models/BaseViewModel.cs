@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HexEditor.Models
+namespace Spooksoft.HexEditor.Models
 {
     public class BaseViewModel : INotifyPropertyChanged
     {

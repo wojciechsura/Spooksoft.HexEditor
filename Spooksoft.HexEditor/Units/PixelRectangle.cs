@@ -1,4 +1,4 @@
-﻿using HexEditor.Geometry;
+﻿using Spooksoft.HexEditor.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace HexEditor.Units
+namespace Spooksoft.HexEditor.Units
 {
     public class PixelRectangle : BaseDoubleRectangle<PixelRectangle, PixelPoint>
     {

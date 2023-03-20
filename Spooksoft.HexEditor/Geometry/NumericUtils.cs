@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HexEditor.Geometry
+namespace Spooksoft.HexEditor.Geometry
 {
     public static class IntUtils
     {

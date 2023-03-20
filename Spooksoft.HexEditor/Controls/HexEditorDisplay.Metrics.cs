@@ -1,6 +1,6 @@
-﻿using HexEditor.Infrastructure;
-using HexEditor.Models;
-using HexEditor.Units;
+﻿using Spooksoft.HexEditor.Infrastructure;
+using Spooksoft.HexEditor.Models;
+using Spooksoft.HexEditor.Units;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace HexEditor.Controls
+namespace Spooksoft.HexEditor.Controls
 {
     public partial class HexEditorDisplay
     {

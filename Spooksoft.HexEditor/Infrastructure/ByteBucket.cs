@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HexEditor.Infrastructure
+namespace Spooksoft.HexEditor.Infrastructure
 {
     internal class ByteBucket : IDisposable
     {
@@ -16,18 +16,25 @@ namespace HexEditor.Infrastructure
         private byte[] data;
         private IBufferPool<byte> bufferPool;
 
-        private ByteBucket(byte[] data, int size, IBufferPool<byte> bufferPool)
+        // Public methods -----------------------------------------------------
+
+        public ByteBucket(byte[] source, int offset, int size, int newBucketCapacity, IBufferPool<byte> bufferPool)
         {
-            if (size < 0 || size > data.Length)
+            if (newBucketCapacity < size)
+                throw new ArgumentOutOfRangeException(nameof(newBucketCapacity));
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+            if (offset + size > source.Length)
                 throw new ArgumentOutOfRangeException(nameof(size));
 
             this.bufferPool = bufferPool ?? throw new ArgumentNullException(nameof(bufferPool));
-            this.data = data ?? throw new ArgumentNullException(nameof(data));
+
+            data = bufferPool.Rent(newBucketCapacity);
+            Array.Copy(source, offset, data, 0, size);
+
             this.size = size;
             this.capacity = data.Length;
         }
-
-        // Public methods -----------------------------------------------------
 
         public ByteBucket(Stream stream, int size, int capacity, IBufferPool<byte> bufferPool)
         {
@@ -313,17 +320,14 @@ namespace HexEditor.Infrastructure
             if (offset < 0 || offset >= size)
                 throw new ArgumentOutOfRangeException(nameof(offset));
 
-            int dataToCopy = size - offset;
+            int bytesToCopy = size - offset;
 
-            if (newBucketCapacity < dataToCopy)
+            if (newBucketCapacity < bytesToCopy)
                 throw new ArgumentOutOfRangeException(nameof(newBucketCapacity), "Not enough target capacity");
-
-            byte[] result = bufferPool.Rent(newBucketCapacity);
-            Array.Copy(data, offset, result, 0, dataToCopy);
 
             size = offset;
 
-            return new ByteBucket(result, dataToCopy, bufferPool);
+            return new ByteBucket(data, offset, bytesToCopy, newBucketCapacity, bufferPool);
         }
 
         public void WriteToStream(Stream stream)

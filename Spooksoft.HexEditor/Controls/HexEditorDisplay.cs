@@ -1,7 +1,7 @@
-﻿using HexEditor.Models;
-using HexEditor.Types;
-using HexEditor.Units;
-using HexEditor.Geometry;
+﻿using Spooksoft.HexEditor.Models;
+using Spooksoft.HexEditor.Types;
+using Spooksoft.HexEditor.Units;
+using Spooksoft.HexEditor.Geometry;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,9 +13,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using HexEditor.Infrastructure;
+using Spooksoft.HexEditor.Infrastructure;
 
-namespace HexEditor.Controls
+namespace Spooksoft.HexEditor.Controls
 {
     public partial class HexEditorDisplay : FrameworkElement
     {

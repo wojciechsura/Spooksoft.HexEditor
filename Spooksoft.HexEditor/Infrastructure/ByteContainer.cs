@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HexEditor.Infrastructure
+namespace Spooksoft.HexEditor.Infrastructure
 {
     public class DataChangeEventArgs
     {
@@ -471,12 +471,32 @@ namespace HexEditor.Infrastructure
 
         public void LoadFromStream(Stream stream)
         {
-            bufferPool.Preallocate(bucketSize, (int)((stream.Length - stream.Position + bucketSize - 1) / bucketSize));
+            if (stream.CanSeek)
+            {
+                bufferPool.Preallocate(bucketSize, (int)((stream.Length - stream.Position + bucketSize - 1) / bucketSize));
 
-            Clear();
+                Clear();
 
-            while (stream.Position < stream.Length)
-                buckets.Add(new ByteBucket(stream, Math.Min(bucketSize, (int)stream.Length - (int)stream.Position), bucketSize, bufferPool));
+                while (stream.Position < stream.Length)
+                    buckets.Add(new ByteBucket(stream, Math.Min(bucketSize, (int)stream.Length - (int)stream.Position), bucketSize, bufferPool));
+            }
+            else
+            {
+                bufferPool.Preallocate(bucketSize, 1);
+
+                Clear();
+
+                var buffer = new byte[bucketSize];
+                int bytesRead;
+
+                do
+                {
+                    bytesRead = stream.Read(buffer, 0, bucketSize);
+                    if (bytesRead > 0)
+                        buckets.Add(new ByteBucket(buffer, 0, bytesRead, bucketSize, bufferPool));
+                }
+                while (bytesRead > 0);
+            }
         }
 
         public void SaveToStream(Stream stream)

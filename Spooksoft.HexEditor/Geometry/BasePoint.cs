@@ -8,7 +8,7 @@
 
 using System;
 
-namespace HexEditor.Geometry
+namespace Spooksoft.HexEditor.Geometry
 {
     public class BaseIntPoint<TConcretePoint>
         where TConcretePoint : BaseIntPoint<TConcretePoint>
