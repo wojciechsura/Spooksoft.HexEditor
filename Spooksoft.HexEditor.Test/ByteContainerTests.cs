@@ -43,7 +43,7 @@ namespace Spooksoft.HexEditor.Test
             var container = CreateFrom(data, bucketSize);
 
             // Assert
-            Assert.AreEqual(data.Length, container.Size);
+            Assert.That(container.Size, Is.EqualTo(data.Length));
 
             byte[] result = new byte[container.Size];
             container.GetAvailableBytes(0, data.Length, result, 0);

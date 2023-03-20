@@ -20,7 +20,7 @@ namespace Spooksoft.HexEditor.Test
 
         private void VerifyContents(ByteBucket bucket, byte[] expectedData)
         {
-            Assert.AreEqual(expectedData.Length, bucket.Size);
+            Assert.That(bucket.Size, Is.EqualTo(expectedData.Length));
 
             if (expectedData.Length > 0)
             {
@@ -28,7 +28,7 @@ namespace Spooksoft.HexEditor.Test
                 bucket.GetBytes(result, 0, 0, bucket.Size);
 
                 for (int i = 0; i < result.Length; i++)
-                    Assert.AreEqual(expectedData[i], result[i]);
+                    Assert.That(result[i], Is.EqualTo(expectedData[i]));
             }
         }
 
@@ -91,8 +91,8 @@ namespace Spooksoft.HexEditor.Test
 
             ByteBucket byteBucket = new ByteBucket(10, new BufferPoolMock<byte>());
 
-            Assert.AreEqual(10, byteBucket.Capacity);
-            Assert.AreEqual(0, byteBucket.Size);
+            Assert.That(byteBucket.Capacity, Is.EqualTo(10));
+            Assert.That(byteBucket.Size, Is.EqualTo(0));
         }
 
         [Test]
@@ -118,8 +118,8 @@ namespace Spooksoft.HexEditor.Test
 
             // Assert
 
-            Assert.AreEqual(0, length);
-            Assert.AreEqual(7, index);
+            Assert.That(length, Is.EqualTo(0));
+            Assert.That(index, Is.EqualTo(7));
             VerifyContents(buckets[0], new byte[] { 1, 1, 1, 1, 2 });
             VerifyContents(buckets[1], new byte[] { 2, 2, 2, 2, 2 });
             VerifyContents(buckets[2], new byte[] { 2, 1, 1, 1, 1 });
@@ -150,16 +150,16 @@ namespace Spooksoft.HexEditor.Test
 
             // Assert
 
-            Assert.AreEqual(1, readBytes[0]);
-            Assert.AreEqual(3, readBytes[1]);
-            Assert.AreEqual(1, readBytes[2]);
+            Assert.That(readBytes[0], Is.EqualTo(1));
+            Assert.That(readBytes[1], Is.EqualTo(3));
+            Assert.That(readBytes[2], Is.EqualTo(1));
 
             byte[] expected = new byte[] { 2, 3, 4, 5, 6 };
             for (int i = 0; i < result.Length; i++)
-                Assert.AreEqual(expected[i], result[i]);
+                Assert.That(result[i], Is.EqualTo(expected[i]));
 
-            Assert.AreEqual(length, 0);
-            Assert.AreEqual(offset, 5);
+            Assert.That(length, Is.EqualTo(0));
+            Assert.That(offset, Is.EqualTo(5));
         }
 
         [Test]
@@ -177,7 +177,7 @@ namespace Spooksoft.HexEditor.Test
 
             // Assert
 
-            Assert.AreEqual(test, byteBucket.Capacity);
+            Assert.That(byteBucket.Capacity, Is.EqualTo(test));
         }
 
         [Test]
@@ -196,9 +196,9 @@ namespace Spooksoft.HexEditor.Test
 
             // Assert
 
-            Assert.AreEqual(result.Length, data.Length);
+            Assert.That(data.Length, Is.EqualTo(result.Length));
             for (int i = 0; i < result.Length; i++)
-                Assert.AreEqual(result[i], data[i]);
+                Assert.That(data[i], Is.EqualTo(result[i]));
         }
 
         [Test]
@@ -254,7 +254,7 @@ namespace Spooksoft.HexEditor.Test
 
             // Assert
 
-            Assert.AreEqual(expected, byteBucket.Capacity);
+            Assert.That(byteBucket.Capacity, Is.EqualTo(expected));
         }
 
         [Test]
@@ -275,8 +275,8 @@ namespace Spooksoft.HexEditor.Test
             VerifyContents(byteBucket, expected1);
             VerifyContents(byteBucket2, expected2);
 
-            Assert.AreEqual(capacity, byteBucket.Capacity);
-            Assert.AreEqual(targetCapacity, byteBucket2.Capacity);
+            Assert.That(byteBucket.Capacity, Is.EqualTo(capacity));
+            Assert.That(byteBucket2.Capacity, Is.EqualTo(targetCapacity));
         }
 
         [Test]
@@ -369,7 +369,7 @@ namespace Spooksoft.HexEditor.Test
 
             // Assert
 
-            Assert.AreEqual(length, 0);
+            Assert.That(length, Is.EqualTo(0));
             VerifyContents(buckets[0], new byte[] { 1, 2, 3, 4 });
             VerifyContents(buckets[1], new byte[] { });
             VerifyContents(buckets[2], new byte[] { 2, 3, 4, 5 });
