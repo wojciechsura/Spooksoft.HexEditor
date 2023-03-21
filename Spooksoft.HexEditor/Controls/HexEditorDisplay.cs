@@ -1811,12 +1811,21 @@ namespace Spooksoft.HexEditor.Controls
             }
         }
 
+        protected override void OnMouseWheel(MouseWheelEventArgs e)
+        {
+            ScrollPosition = Math.Max(0, Math.Min(ScrollMaximum, ScrollPosition + ((-e.Delta / Mouse.MouseWheelDeltaForOneLine) * ScrollSmallChange)));
+            e.Handled = true;
+        }
+
         protected override void OnTextInput(TextCompositionEventArgs e)
         {
-            if (selection is HexCursorSelectionInfo || (selection is RangeSelectionInfo && ((RangeSelectionInfo)selection).Area == DataArea.Hex))
-                HandleHexTextInput(e.Text);
-            else if (selection is CharCursorSelectionInfo || (selection is RangeSelectionInfo && ((RangeSelectionInfo)selection).Area == DataArea.Char))
-                HandleCharTextInput(e.Text);
+            if (!IsReadOnly)
+            {
+                if (selection is HexCursorSelectionInfo || (selection is RangeSelectionInfo && ((RangeSelectionInfo)selection).Area == DataArea.Hex))
+                    HandleHexTextInput(e.Text);
+                else if (selection is CharCursorSelectionInfo || (selection is RangeSelectionInfo && ((RangeSelectionInfo)selection).Area == DataArea.Char))
+                    HandleCharTextInput(e.Text);
+            }
 
             e.Handled = true;
         }
@@ -1923,7 +1932,10 @@ namespace Spooksoft.HexEditor.Controls
                 }
                 else if (CheckShiftDown() && !CheckControlDown())
                 {
-                    PasteFromClipboard();
+                    if (!IsReadOnly)
+                    {
+                        PasteFromClipboard();
+                    }
                 }
                 else
                 {
@@ -1939,20 +1951,26 @@ namespace Spooksoft.HexEditor.Controls
             }
             else if (e.Key == Key.Delete)
             {
-                if (CheckShiftDown())
+                if (!IsReadOnly)
                 {
-                    CutToClipboard();
-                }
-                else
-                {
-                    DoDelete();
+                    if (CheckShiftDown())
+                    {
+                        CutToClipboard();
+                    }
+                    else
+                    {
+                        DoDelete();
+                    }
                 }
 
                 e.Handled = true;
             }
             else if (e.Key == Key.Back)
             {
-                DoBackspace();
+                if (!IsReadOnly)
+                {
+                    DoBackspace();
+                }
 
                 e.Handled = true;
             }
@@ -2073,6 +2091,20 @@ namespace Spooksoft.HexEditor.Controls
                 hexEditorDisplay.HandleFontSizeChanged();
             }
         }
+
+        #endregion
+
+        #region IsReadOnly dependency property
+
+        public bool IsReadOnly
+        {
+            get { return (bool)GetValue(IsReadOnlyProperty); }
+            set { SetValue(IsReadOnlyProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsReadOnly.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsReadOnlyProperty =
+            DependencyProperty.Register("IsReadOnly", typeof(bool), typeof(HexEditorDisplay), new PropertyMetadata(false));
 
         #endregion
 
